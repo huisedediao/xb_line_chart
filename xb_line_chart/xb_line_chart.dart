@@ -37,6 +37,9 @@ class XBLineChart extends StatefulWidget {
   /// 最底部，名字的布局方式，默认为wrap
   final XBLineChartNameLayout? namesLayout;
 
+  /// 左侧标题和图表的间距，默认10
+  final double leftTitlePaddingRight;
+
   XBLineChart(
       {this.leftTitleCount = 8,
       this.leftTitleWidth = 50,
@@ -46,6 +49,7 @@ class XBLineChart extends StatefulWidget {
       this.hoverBuilder,
       this.hoverWidthGetter,
       this.namesPaddingLeft,
+      this.leftTitlePaddingRight = 10,
       this.needNames = true,
       this.namesLayout = XBLineChartNameLayout.wrap,
       super.key})
@@ -120,14 +124,16 @@ class _XBLineChartState extends State<XBLineChart> {
     return Container(
       // color: Colors.amber,
       child: Padding(
-        padding: EdgeInsets.only(top: XBLineChartLeftTitleExtensionSpace),
+        padding: EdgeInsets.only(
+            top: XBLineChartLeftTitleExtensionSpace,
+            right: widget.leftTitlePaddingRight),
         child: Container(
           width: widget.leftTitleWidth,
           // color: Colors.red,
           child: Column(
             children: List.generate(leftTitleContents.length, (index) {
               return Container(
-                  alignment: Alignment.center,
+                  alignment: Alignment.centerRight,
                   height: XBLineChartLeftTitleHeight,
                   // color: colors.randColor,
                   child: Text(
