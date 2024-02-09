@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:xb_custom_widget_cabin/line_chart/xb_line_chart/xb_line_chart_config.dart';
 import 'package:xb_custom_widget_cabin/line_chart/xb_line_chart/xb_line_chart_data.dart';
@@ -24,10 +23,10 @@ class XBLineChart extends StatefulWidget {
   List<XBLineChartModel> models;
 
   /// 悬浮窗的宽度，用于控制悬浮窗显示的位置
-  final XBLineChartHoverWidth hoverWidth;
+  final XBLineChartHoverWidthGetter? hoverWidthGetter;
 
   /// 悬浮窗的样式构建函数
-  final XBLineChartHoverBuilder hoverBuilder;
+  final XBLineChartHoverBuilder? hoverBuilder;
 
   /// 是否需要底部的名字部分
   final bool needNames;
@@ -36,7 +35,7 @@ class XBLineChart extends StatefulWidget {
   final double? namesPaddingLeft;
 
   /// 最底部，名字的布局方式，默认为wrap
-  final XBLineChartNameLayout namesLayout;
+  final XBLineChartNameLayout? namesLayout;
 
   XBLineChart(
       {this.leftTitleCount = 8,
@@ -44,13 +43,17 @@ class XBLineChart extends StatefulWidget {
       required this.beginDate,
       required this.models,
       this.pointCountPerPage = 7,
-      required this.hoverBuilder,
-      required this.hoverWidth,
+      this.hoverBuilder,
+      this.hoverWidthGetter,
       this.namesPaddingLeft,
       this.needNames = true,
       this.namesLayout = XBLineChartNameLayout.wrap,
       super.key})
-      : assert(leftTitleCount > 1, "XBLineChart error：左侧标题数至少为2个") {
+      : assert(leftTitleCount > 1, "XBLineChart error：左侧标题数至少为2个"),
+        assert(
+            (hoverWidthGetter != null && hoverBuilder != null) ||
+                (hoverWidthGetter == null && hoverBuilder == null),
+            "hoverBuilder必须全套定制") {
     if (models.isEmpty) {
       models = [
         XBLineChartModel(name: "暂无数据", color: Colors.transparent, values: [1])
@@ -187,13 +190,7 @@ class _XBLineChartState extends State<XBLineChart> {
               child: Positioned(
                 top: 0,
                 left: _hoverLeft,
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    // print("constraints.maxWidth:${constraints.maxWidth}");
-                    return widget.hoverBuilder(
-                        _hoverIndex, _hoverDx, constraints.maxHeight);
-                  },
-                ),
+                child: _hover(constraints.maxHeight),
               ),
             )
           ],
@@ -202,9 +199,22 @@ class _XBLineChartState extends State<XBLineChart> {
     );
   }
 
+  Widget _hover(maxHeight) {
+    if (widget.hoverBuilder != null) {
+      return widget.hoverBuilder!(_hoverIndex, _hoverDx, maxHeight);
+    }
+    return xbLineChartDefHoverBuilder(
+        _hoverIndex, _hoverDx, maxHeight, widget.beginDate, widget.models);
+  }
+
   double get _hoverLeft {
     double padding = 0;
-    final hoverWidth = widget.hoverWidth(_hoverIndex, _hoverDx);
+    late double hoverWidth;
+    if (widget.hoverWidthGetter != null) {
+      hoverWidth = widget.hoverWidthGetter!(_hoverIndex, _hoverDx);
+    } else {
+      hoverWidth = xbLineChartDefHoverWidthGetter(_hoverIndex, _hoverDx);
+    }
     double ret = _hoverDx - hoverWidth * 0.5;
     if (ret < padding) {
       ret = padding;
