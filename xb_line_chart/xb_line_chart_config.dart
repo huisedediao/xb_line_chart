@@ -17,7 +17,7 @@ double XBLineChartDayGap = 30;
 double XBLineChartNameMarkWidth = 5;
 
 /// 数据点的横向扩展空间
-double XBLineChartDatasExtensionSpace = 30;
+double XBLineChartDatasExtensionSpace = 20;
 
 /// 左边标题纵向的扩展空间
 double XBLineChartLeftTitleExtensionSpace = 15;
