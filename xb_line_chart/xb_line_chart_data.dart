@@ -120,7 +120,7 @@ class XBDataPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final double maxY =
+    const double maxY =
         xbLineChartLeftTitleExtensionSpace + xbLineChartLeftTitleHeight * 0.5;
     final double minY = size.height - maxY - xbLineChartBottomTitleFix;
     final double rangeY = maxY - minY;
