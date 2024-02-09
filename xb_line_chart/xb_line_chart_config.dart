@@ -10,19 +10,33 @@ typedef XBLineChartHoverWidthGetter = double Function(
 
 enum XBLineChartNameLayout { scroll, wrap }
 
-double XBLineChartBottomTitleFix = 10;
-double XBLineChartBottomTitleWidth = 60;
-double XBLineChartLeftTitleHeight = 30;
-double XBLineChartDayGap = 30;
-double XBLineChartNameMarkWidth = 5;
+/// 每天的间隔，根据外部传入的数值进行计算
+double xbLineChartDayGap = 30;
 
 /// 数据点的横向扩展空间
-double XBLineChartDatasExtensionSpace = 20;
+double xbLineChartDatasExtensionSpace = 0;
+
+/// 底部标题位置调整的参数
+const double xbLineChartBottomTitleFix = 10;
+
+/// 左侧标题的高度
+const double xbLineChartLeftTitleHeight = 30;
+
+/// 标记点的大小
+const double xbLineChartNameMarkWidth = 5;
 
 /// 左边标题纵向的扩展空间
-double XBLineChartLeftTitleExtensionSpace = 15;
+const double xbLineChartLeftTitleExtensionSpace = 15;
 
-double xbLineChartDefHoverWidth = 125;
+/// 默认的hover的宽度
+const double xbLineChartDefHoverWidth = 125;
+
+/// 日期的字体大小
+const double xbLineChartDateFontSize = 10;
+
+TextStyle xbLineChartDateStrStyle = const TextStyle(
+    color: Color.fromARGB(255, 148, 146, 146),
+    fontSize: xbLineChartDateFontSize);
 
 String xbLineChartConvertDateToString(DateTime date) {
   String year = xbLineChartFixZeroStr(date.year);

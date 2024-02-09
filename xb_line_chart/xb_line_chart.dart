@@ -90,14 +90,43 @@ class _XBLineChartState extends State<XBLineChart> {
   }
 
   double get _painterHeight {
-    return widget.leftTitleCount * XBLineChartLeftTitleHeight +
-        XBLineChartLeftTitleExtensionSpace * 2 +
-        XBLineChartBottomTitleFix;
+    return widget.leftTitleCount * xbLineChartLeftTitleHeight +
+        xbLineChartLeftTitleExtensionSpace * 2 +
+        xbLineChartBottomTitleFix;
   }
 
   double get _painterWidth {
-    return (_maxCount - 1) * XBLineChartDayGap +
-        XBLineChartDatasExtensionSpace * 2;
+    return (_maxCount - 1) * xbLineChartDayGap +
+        xbLineChartDatasExtensionSpace * 2;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    /// 计算XBLineChartDatasExtensionSpace
+    final dayCount = xbLineChartMaxValueCount(widget.models);
+    for (int i = 0; i < dayCount; i++) {
+      final tempDataStr = xbLineChartDateStr(widget.beginDate, i);
+      final tempDateStrLenHalf =
+          caculateTextWidth(tempDataStr, xbLineChartDateStrStyle) * 0.5;
+      if (xbLineChartDatasExtensionSpace < tempDateStrLenHalf) {
+        xbLineChartDatasExtensionSpace = tempDateStrLenHalf;
+      }
+    }
+    print(xbLineChartDatasExtensionSpace);
+  }
+
+  double caculateTextWidth(String value, TextStyle style) {
+    final textPainter = TextPainter(
+      text: TextSpan(text: value, style: style),
+      textDirection: TextDirection.ltr,
+    );
+    textPainter.layout();
+
+    final size = textPainter.size;
+    final width = size.width;
+    return width;
   }
 
   @override
@@ -125,7 +154,7 @@ class _XBLineChartState extends State<XBLineChart> {
       // color: Colors.amber,
       child: Padding(
         padding: EdgeInsets.only(
-            top: XBLineChartLeftTitleExtensionSpace,
+            top: xbLineChartLeftTitleExtensionSpace,
             right: widget.leftTitlePaddingRight),
         child: Container(
           width: widget.leftTitleWidth,
@@ -134,7 +163,7 @@ class _XBLineChartState extends State<XBLineChart> {
             children: List.generate(leftTitleContents.length, (index) {
               return Container(
                   alignment: Alignment.centerRight,
-                  height: XBLineChartLeftTitleHeight,
+                  height: xbLineChartLeftTitleHeight,
                   // color: colors.randColor,
                   child: Text(
                     '${leftTitleContents[index]}',
@@ -151,8 +180,8 @@ class _XBLineChartState extends State<XBLineChart> {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         ///必须在最前面
-        XBLineChartDayGap =
-            (constraints.maxWidth - XBLineChartDatasExtensionSpace * 2) /
+        xbLineChartDayGap =
+            (constraints.maxWidth - xbLineChartDatasExtensionSpace * 2) /
                 (widget.pointCountPerPage - 1);
         _maxDataWidth = constraints.maxWidth;
         // print("maxWidth:${constraints.maxWidth}");

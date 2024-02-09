@@ -17,8 +17,8 @@ class XBLineChartNameWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: XBLineChartNameMarkWidth,
-          height: XBLineChartNameMarkWidth,
+          width: xbLineChartNameMarkWidth,
+          height: xbLineChartNameMarkWidth,
           color: color,
         ),
         const SizedBox(

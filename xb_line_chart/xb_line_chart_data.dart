@@ -38,7 +38,7 @@ class _XBLineChartDataState extends State<XBLineChartData> {
     double rangeLeft = _touchX! - range;
     double rangeRight = _touchX! + range;
     for (int i = 0; i < xbLineChartMaxValueCount(widget.models); i++) {
-      double x = i * XBLineChartDayGap + XBLineChartDatasExtensionSpace;
+      double x = i * xbLineChartDayGap + xbLineChartDatasExtensionSpace;
       if (x > rangeLeft && x < rangeRight) {
         return i;
       }
@@ -121,11 +121,11 @@ class XBDataPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final double maxY =
-        XBLineChartLeftTitleExtensionSpace + XBLineChartLeftTitleHeight * 0.5;
-    final double minY = size.height - maxY - XBLineChartBottomTitleFix;
+        xbLineChartLeftTitleExtensionSpace + xbLineChartLeftTitleHeight * 0.5;
+    final double minY = size.height - maxY - xbLineChartBottomTitleFix;
     final double rangeY = maxY - minY;
     final double stepY = rangeY / (lineCount - 1);
-    final double stepX = XBLineChartDayGap;
+    final double stepX = xbLineChartDayGap;
 
     var paint = Paint()
       ..color = Colors.grey.withAlpha(40)
@@ -144,7 +144,7 @@ class XBDataPainter extends CustomPainter {
         const double verticalLineHeight = 7;
         paint.color = Colors.grey.withAlpha(40); // Or any color you prefer
 
-        for (double x = XBLineChartDatasExtensionSpace;
+        for (double x = xbLineChartDatasExtensionSpace;
             x <= size.width;
             x += stepX) {
           final double topY = y - verticalLineHeight;
@@ -163,12 +163,12 @@ class XBDataPainter extends CustomPainter {
       double valueTextYOffset = 5;
       for (int i = 0; i < model.values.length - 1; i++) {
         final value = model.values[i];
-        final double x = i * stepX + XBLineChartDatasExtensionSpace;
+        final double x = i * stepX + xbLineChartDatasExtensionSpace;
         final double ratio = value / max;
         final double y = minY + ratio * rangeY;
 
         final nextValue = model.values[i + 1];
-        final double nextX = (i + 1) * stepX + XBLineChartDatasExtensionSpace;
+        final double nextX = (i + 1) * stepX + xbLineChartDatasExtensionSpace;
         final double nextRatio = nextValue / max;
         final double nextY = minY + nextRatio * rangeY;
 
@@ -202,7 +202,7 @@ class XBDataPainter extends CustomPainter {
       }
       final lastValue = model.values.last;
       final double lastX =
-          (model.values.length - 1) * stepX + XBLineChartDatasExtensionSpace;
+          (model.values.length - 1) * stepX + xbLineChartDatasExtensionSpace;
       final double lastRatio = lastValue / max;
       final double lastY = minY + lastRatio * rangeY;
       canvas.drawCircle(Offset(lastX, lastY), valuePointW, paint);
@@ -220,19 +220,16 @@ class XBDataPainter extends CustomPainter {
     }
 
     // Draw dates
-    const double fontSize = 10;
-    final double dateY = size.height - fontSize - 15;
+    final double dateY = size.height - xbLineChartDateFontSize - 15;
     for (int i = 0; i < models[0].values.length; i += 3) {
       final dateStr = xbLineChartDateStr(beginDate, i);
-      final double x = i * stepX + XBLineChartDatasExtensionSpace;
+      final double x = i * stepX + xbLineChartDatasExtensionSpace;
 
       TextPainter textPainter = TextPainter(
         text: TextSpan(
           text: dateStr,
-          style: const TextStyle(
-              color: Color.fromARGB(255, 148, 146, 146),
-              fontSize:
-                  fontSize), // Change the color and font size to your preference
+          style:
+              xbLineChartDateStrStyle, // Change the color and font size to your preference
         ),
         textDirection: TextDirection.ltr,
       );
