@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:xb_custom_widget_cabin/line_chart/xb_line_chart/xb_line_chart_config.dart';
+
+import 'xb_line_chart_config.dart';
 
 class XBLineChartNameWidget extends StatelessWidget {
   final Color color;

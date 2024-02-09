@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:xb_custom_widget_cabin/line_chart/xb_line_chart/xb_line_chart_model.dart';
-import 'package:xb_custom_widget_cabin/line_chart/xb_line_chart/xb_line_chart_name_widget.dart';
+
+import 'xb_line_chart_model.dart';
+import 'xb_line_chart_name_widget.dart';
 
 typedef XBLineChartOnHover = void Function(int? hoverIndex, double hoverDx);
 typedef XBLineChartHoverBuilder = Widget Function(

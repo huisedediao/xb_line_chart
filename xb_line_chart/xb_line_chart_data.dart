@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:xb_custom_widget_cabin/line_chart/xb_line_chart/xb_line_chart_config.dart';
-import 'package:xb_custom_widget_cabin/line_chart/xb_line_chart/xb_line_chart_model.dart';
+
+import 'xb_line_chart_config.dart';
+import 'xb_line_chart_model.dart';
 
 class XBLineChartData extends StatefulWidget {
   final int leftTitleCount;

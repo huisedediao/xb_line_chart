@@ -1,9 +1,10 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:xb_custom_widget_cabin/line_chart/xb_line_chart/xb_line_chart_config.dart';
-import 'package:xb_custom_widget_cabin/line_chart/xb_line_chart/xb_line_chart_data.dart';
-import 'package:xb_custom_widget_cabin/line_chart/xb_line_chart/xb_line_chart_model.dart';
-import 'package:xb_custom_widget_cabin/line_chart/xb_line_chart/xb_line_chart_name_widget.dart';
+
+import 'xb_line_chart_config.dart';
+import 'xb_line_chart_data.dart';
+import 'xb_line_chart_model.dart';
+import 'xb_line_chart_name_widget.dart';
 
 // ignore: must_be_immutable
 class XBLineChart extends StatefulWidget {
